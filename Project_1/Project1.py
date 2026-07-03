@@ -1,0 +1,135 @@
+
+
+import random
+from datetime import datetime
+
+BOT_NAME = "AIBot"
+
+
+
+INTENT_TRIGGERS = {
+    "greeting": ["hello", "hi", "hey", "yo", "good morning", "good evening"],
+    "farewell": ["bye", "goodbye", "see you", "exit", "quit"],
+    "how_are_you": ["how are you", "how are you doing", "how's it going"],
+    "name_query": ["what is your name", "who are you", "your name"],
+    "thanks": ["thanks", "thank you", "thx", "appreciate it"],
+    "help": ["help", "what can you do", "options", "commands"],
+    "time_query": ["what time is it", "current time", "time now"],
+}
+
+INTENT_RESPONSES = {
+    "greeting": [
+
+        "Hello there! How can I help you today?",
+        "Hi! Great to see you.",
+        "Hey! What's on your mind?",
+    ],
+    "farewell": [
+        "Goodbye! Have a great day.",
+        "See you later!",
+    ],
+    "how_are_you": [
+        "I'm just a set of if-else rules, but I'm running smoothly! How about you?",
+        "Doing great, thanks for asking!",
+    ],
+    "name_query": [
+        f"I'm {BOT_NAME}, your friendly rule-based chatbot from DecodeLabs.",
+    ],
+    "thanks": [
+        "You're welcome!",
+        "Anytime!",
+    ],
+    "help": [
+        "I can chat about greetings, how you're doing, my name, the time, "
+        "or you can just say 'bye' to exit.",
+    ],
+    "time_query": [
+        "lookup_time",  # special marker handled separately below
+    ],
+}
+
+FALLBACK_RESPONSES = [
+    "I do not understand that yet. Could you rephrase?",
+    "Hmm, that's outside my current rule set. Try asking something else!",
+    "Sorry, I don't have a rule for that one.",
+]
+
+EXIT_TRIGGERS = {"exit", "quit"}  
+
+
+
+# PHASE 1: INPUT & SANITIZATION
+def sanitize(raw_input: str) -> str:
+    """Normalize raw user input: lowercase + strip whitespace."""
+    return raw_input.lower().strip()
+
+
+
+# Build a flat lookup table: trigger_phrase -> intent_name
+# This is the "Pivot: Hash Maps" step from the deck — instead of checking
+# every trigger with if/elif (O(n)), we get O(1) dictionary access.
+
+def build_trigger_lookup():
+    lookup = {}
+    for intent, phrases in INTENT_TRIGGERS.items():
+        for phrase in phrases:
+            lookup[phrase] = intent
+    return lookup
+
+
+TRIGGER_TO_INTENT = build_trigger_lookup()
+
+
+def match_intent(clean_input: str):
+ 
+    # 1. Exact match (fast path, O(1))
+    if clean_input in TRIGGER_TO_INTENT:
+        return TRIGGER_TO_INTENT[clean_input]
+
+    # 2. Substring fallback (handles slightly longer sentences).
+    # Sort triggers longest-first so specific phrases like "how are you"
+    # are checked before short, easily-collided ones like "yo" (which
+    # would otherwise falsely match inside a word like "yoga" or "you").
+
+    for trigger in sorted(TRIGGER_TO_INTENT, key=len, reverse=True):
+        if trigger in clean_input:
+            return TRIGGER_TO_INTENT[trigger]
+
+    return None
+
+
+def get_response(intent: str) -> str:
+    if intent == "time_query":
+        return f"The current time is {datetime.now().strftime('%H:%M:%S')}."
+    responses = INTENT_RESPONSES.get(intent, FALLBACK_RESPONSES)
+    return random.choice(responses)
+
+
+# PHASE 3: THE HEARTBEAT — continuous loop with a clean exit (kill command)
+def run_chatbot():
+    print(f"{BOT_NAME}: Hello! I'm a rule-based chatbot. Type 'bye' or 'exit' to quit.")
+
+    while True:
+        raw_input_text = input("You: ")
+        clean_input = sanitize(raw_input_text)
+
+        # Empty input guard
+        if clean_input == "":
+            print(f"{BOT_NAME}: Please type something.")
+            continue
+
+        intent = match_intent(clean_input)
+
+        # Exit strategy: clean break on farewell intent or hard kill words
+        if intent == "farewell" or clean_input in EXIT_TRIGGERS:
+            print(f"{BOT_NAME}: {get_response('farewell')}")
+            break
+
+        if intent is not None:
+            print(f"{BOT_NAME}: {get_response(intent)}")
+        else:
+            print(f"{BOT_NAME}: {random.choice(FALLBACK_RESPONSES)}")
+
+
+if __name__ == "__main__":
+    run_chatbot()
