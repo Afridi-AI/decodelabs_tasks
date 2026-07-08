@@ -52,3 +52,12 @@ accuracy)
 Result: ~93% accuracy, 0.93 macro F1
 Skills: data handling, supervised learning basics, model training,
 train/test methodology, output validation
+
+
+
+Project 3  — Tech Stack Recommender(Recommendation System)
+A content based recommendation engine that maps a user's skills to the most relevant job roles.
+Given at least three input skills, the script vectorizes user and role data using TF-IDF, scores relevance with cosine similarity, and returns the Top 3 best matching career paths.
+Files
+tech_stack_recommender.py : core recommendation logic (ingestion, scoring, sorting, filtering)
+raw_skills.csv :  dataset of job roles and their associated skills
