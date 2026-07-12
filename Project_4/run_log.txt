@@ -1,0 +1,36 @@
+[1] Loaded input image: sample_input.png (918x532)
+[2] Pre-processing complete: grayscale -> blur -> deskew -> adaptive threshold
+[3] Tesseract OCR complete: 26 text region(s) detected
+[4] Confidence gate (80%): 24 accepted, 2 dropped
+[5] Visual confirmation saved: output_annotated.png
+
+--- RECOGNIZED TEXT (>= 80% confidence) ---
+DECODELABS TRAINING KIT Project 4: and Text Recognition Module: Optical Character Recognition Engine: Tesseract OCR via pytesseract Status: Pipeline Validated Confidence Threshold: 80 percent
+
+--- WORD-LEVEL BREAKDOWN ---
+  'DECODELABS'  confidence=91.0%  box=(82, 84, 295, 31)
+  'TRAINING'  confidence=95.0%  box=(452, 83, 218, 32)
+  'KIT'  confidence=95.0%  box=(688, 84, 70, 30)
+  'Project'  confidence=96.0%  box=(81, 161, 87, 25)
+  '4:'  confidence=96.0%  box=(176, 162, 23, 20)
+  'and'  confidence=96.0%  box=(300, 161, 47, 21)
+  'Text'  confidence=96.0%  box=(357, 162, 51, 20)
+  'Recognition'  confidence=96.0%  box=(420, 161, 149, 25)
+  'Module:'  confidence=96.0%  box=(81, 211, 99, 21)
+  'Optical'  confidence=96.0%  box=(192, 211, 89, 25)
+  'Character'  confidence=96.0%  box=(292, 211, 127, 21)
+  'Recognition'  confidence=93.0%  box=(429, 211, 149, 25)
+  'Engine:'  confidence=95.0%  box=(81, 262, 93, 24)
+  'Tesseract'  confidence=95.0%  box=(185, 262, 122, 20)
+  'OCR'  confidence=95.0%  box=(316, 261, 55, 20)
+  'via'  confidence=92.0%  box=(381, 261, 36, 21)
+  'pytesseract'  confidence=91.0%  box=(428, 263, 151, 24)
+  'Status:'  confidence=96.0%  box=(80, 312, 88, 20)
+  'Pipeline'  confidence=96.0%  box=(181, 311, 99, 25)
+  'Validated'  confidence=96.0%  box=(289, 311, 120, 21)
+  'Confidence'  confidence=96.0%  box=(80, 361, 144, 21)
+  'Threshold:'  confidence=95.0%  box=(233, 361, 135, 21)
+  '80'  confidence=95.0%  box=(380, 361, 30, 20)
+  'percent'  confidence=95.0%  box=(421, 363, 98, 23)
+
+[6] Accuracy benchmark: average confidence = 95.0% (minimum standard: 80%)
