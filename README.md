@@ -61,3 +61,17 @@ Given at least three input skills, the script vectorizes user and role data usin
 Files
 tech_stack_recommender.py : core recommendation logic (ingestion, scoring, sorting, filtering)
 raw_skills.csv :  dataset of job roles and their associated skills
+
+
+
+
+
+ Project 4— Image & Text Recognition (OCR)
+A basic optical character recognition (OCR) pipeline built with Python, OpenCV, and Tesseract. It takes a raw image, pre-processes it (grayscale → blur → deskew → adaptive thresholding), extracts text using pytesseract, and filters results through an 80% confidence gate before generating an annotated output image with bounding boxes and confidence scores.
+Tech stack: Python · OpenCV · pytesseract (Tesseract OCR) · NumPy · Pillow
+Highlights:
+
+Full image pre-processing chain for noisy/skewed scans
+Confidence-based filtering (drops low-confidence detections)
+Visual output with labeled bounding boxes
+Sample input + output included for quick testing
